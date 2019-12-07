@@ -60,7 +60,7 @@ Then put inside makefile the code below:
 
 `clean :`
 
-	`rm resume.tex`
+`rm resume.tex`
   
 This will create the *resume.tex* file. Run it locally to produce the *resume.pdf*.
 
