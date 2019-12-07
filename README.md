@@ -1,5 +1,5 @@
-# modern-resume-theme
-[View Demo](https://sproogen.github.io/modern-resume-theme/)
+# Awesomen-CV Second Assignment
+[View Site](https://moya10.github.io/awesome-cv/)
 
 ## Installation & setup guide
 This template is designed to be hosted using GitHub pages and so that's what these instructions will cover. If you plan on hosting it seperately then there might be some extra steps that we wont cover.
