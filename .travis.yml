@@ -1,53 +1,10 @@
-sudo:       required
-language:   generic
-services:   docker
-sudo apt-get -qq update
+sudo: required
+language: generic
+services: docker
 
-# Install TexLive 2015 Distribution
-# This includes the recommended fonts, LaTeX packages, and the XeLaTeX
-# compiler
-sudo apt-get install -y --no-install-recommends texlive-fonts-recommended \
-    texlive-latex-extra \
-    texlive-fonts-extra \
-    dvipng \
-    texlive-latex-recommended \
-    texlive-xetex
-
-# Install decompression tool to extract LaTex packages later on
-sudo apt-get install -y xzdec
-
-# Install biber for .bib compilation
-sudo apt-get install -y biber
-
-# Initialize user tree for installing additional packages
-sudo tlmgr init-usertree
-
-# Define repository for obtaining LaTeX packages (using TexLive 2015)
-sudo tlmgr option repository ftp://tug.org/historic/systems/texlive/2015/tlnet-final
-
-# ----------------------------------------------------------------------------
-#   INSTALL ADDITIONAL PACKAGES HERE
-# ----------------------------------------------------------------------------
-
-sudo tlmgr install \
-    hyperref       \
-    parskip        \
-    babel          \
-    tools          \
-    graphics       \
-    xcolor
-
-# Docs of the options: https://github.com/moya10/awesome-cv/tree/master#configuration-options
-tex-config:
-- tex-scheme=small
-- push-type=none
-- build-pattern=resume.tex
-#- latexmk-flags=-dvi -f
-# Check at https://www.ctan.org/pkg/package-name in which TeX Live package a LaTeX package is contained.
-- packages=xkeyval, xetex,fontspec,collection-latex, collection-langeuropean, exam, amsmath, amscls, mathtools, thmtools, stmaryrd, xcolor, pdfpages, pgf, cancel, hyperref, pgfplots, listings, scalerel, stackengine, etoolbox, listofitems, marvosym, amsfonts, opensans, slantsc, fancyhdr, ulem, algorithms, algorithmicx, float, booktabs, enumitem, polynom, fancyvrb, makecmds, multirow, chngcntr, fvextra, upquote, lineno, ifplatform, xstring, framed, caption, collection-fontsrecommended, minted, pgfgantt, geometry, beamer, translator, environ, trimspaces, imakeidx, graphics, tools, oberdiek
-
-# We will use the docker image from https://hub.docker.com/r/phpirates/texlive-latexbuild/
 script:
-- make latex COMPILER=xelatex
-- docker run --mount src=$TRAVIS_BUILD_DIR/,target=/repo,type=bind phpirates/texlive-latexbuild:small-2018
-
+  # We use the docker image from https://hub.docker.com/r/dxjoke/tectonic-docker/
+  # Compiling only main.tex:
+  - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic resume.tex"
+  # Compiling multiple files as well as using biber:
+#  - docker run --mount src=$TRAVIS_BUILD_DIR/src,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --keep-intermediates --reruns 0 biber-mwe.tex; biber biber-mwe; tectonic biber-mwe.tex; tectonic main.tex"
