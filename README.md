@@ -1,4 +1,4 @@
-# Awesomen-CV Second Assignment
+# Awesome-CV Second Assignment
 [View Site](https://moya10.github.io/awesome-cv/)
 
 ## Installation & setup guide
