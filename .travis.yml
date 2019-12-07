@@ -28,7 +28,7 @@ script:
   - latexmk -pdf resume.tex
 
   # But you could use any other compiler as well instead of latexmk. Example:
-#  - pdflatex main.tex
+  - xelatex resume.tex
 #  - bibtex main
 #  - pdflatex main.tex
 #  - pdflatex main.tex # Compile twice to fix references
