@@ -46,20 +46,19 @@ Before you start make sure you have *pandoc* [here](https://pandoc.org/installin
 
 Then put inside makefile the code below:
 
-`TEX = pandoc details.yml 
-src = template.tex
-FLAGS =
-
-resume.tex : $(src)
-	$(TEX) $(filter-out $<,$^ ) -o $@ --template=$< $(FLAGS)
- .PHONY: clean
-clean :
-	rm resume.tex`
+`TEX = pandoc details.yml `
+`src = template.tex`
+`FLAGS =`
+`resume.tex : $(src)`
+`	$(TEX) $(filter-out $<,$^ ) -o $@ --template=$< $(FLAGS)`
+` .PHONY: clean`
+`clean :`
+	`rm resume.tex`
   
-This will create the *resume.tex* file. Run it locally to produce the resume.pdf.
+This will create the *resume.tex* file. Run it locally to produce the *resume.pdf*.
 
 In *_config.yml* add the cv option and a link to download the *resume.pdf* file.
 
 ## Upload
 
-Upload the whole .git project in your repository and create the gh-pages branch.
+Upload the whole .git project in your repository and create the *gh-pages* branch.
