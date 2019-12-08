@@ -1,8 +1,12 @@
 language: ruby
 cache: bundler
+before_install:
+- wget https://github.com/jgm/pandoc/releases/download/1.15.2/pandoc-1.15.2-1-amd64.deb
+- sudo dpkg -i pandoc-1.15.2-1-amd64.deb
+- rm pandoc-1.15.2-1-amd64.deb
 branches:
   only:
-  - release
+  - gh-pages
 script:
   - JEKYLL_ENV=production bundle exec jekyll build --destination site
   - make
@@ -16,4 +20,4 @@ deploy:
   github-token: 57a7fcda830b2ef0331a5b2029dae669e2a346b8
   keep-history: true
   on:
-    branch: release
+    branch: gh-pages
