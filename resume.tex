@@ -1,248 +1,184 @@
-%!TEX TS-program = xelatex
-%!TEX encoding = UTF-8 Unicode
-
-\documentclass[11pt, a4paper]{article}
-
-% LAYOUT
-%--------------------------------
-% Margins
+\documentclass[paper=a4,fontsize=11pt]{scrartcl} % KOMA-article class
+							
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage{amsmath,amsfonts,amsthm}     % Math packages
+\usepackage{graphicx}                    % Enable pdflatex
+\usepackage[svgnames]{xcolor}            % Colors by their 'svgnames'
 \usepackage{geometry}
-\geometry{a4paper, left=35mm, right=35mm, top=25mm, bottom=25mm}
+	\textheight=700px                    % Saving trees ;-)
+\usepackage{url}
+\usepackage{tabu}
+\usepackage{wrapfig}                
+\usepackage{bookmark}
+\usepackage{hyperref} 
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    linktocpage=true,
+    bookmarksnumbered=true,
+}
+\frenchspacing              % Better looking spacings after periods
+\pagestyle{empty}           % No pagenumbers/headers/footers
 
-% Do not indent paragraphs
-\setlength\parindent{0in}
-
-% Enable multicolumns
-\usepackage{multicol}
-\setlength{\columnsep}{-3.5cm}
-
-% Uncomment to suppress page numbers
-% \pagenumbering{gobble}
-
-% LANGUAGE
-%--------------------------------
-\usepackage{fontspec,xgreek,polyglossia}
-\defaultfontfeatures{Mapping=tex-text}
-\setmainfont[Path=font/, Mapping=tex-text]{GFSDidot.otf}
-
-\setdefaultlanguage{english}
-\setotherlanguage[variant=modern]{greek}
-% add hyp rules or replace compound words with \hyp{}
-\usepackage{hyphenat}
-
-% TYPOGRAPHY
-%--------------------------------
-\usepackage{xunicode}
-\usepackage{xltxtra}
-
-% nice icons
-%\usepackage{fontawesome}
-\usepackage{academicons}
-% reduce widows and orphans
-\usepackage[all]{nowidow}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-
-\usepackage[protrusion=true,final]{microtype}
-\usepackage{hyperref}
-
-
-% MARGIN NOTES
-%--------------------------------
-\usepackage{marginnote}
-\newcommand{\note}[1]{\marginnote{\scriptsize #1}}
-\renewcommand*{\raggedleftmarginnote}{}
-\setlength{\marginparsep}{7pt}
-\reversemarginpar
-
-% HEADINGS
-%--------------------------------
+%%% Custom sectioning (sectsty package)
+%%% ------------------------------------------------------------
 \usepackage{sectsty}
-\usepackage[normalem]{ulem}
-\sectionfont{\rmfamily\mdseries}
-\subsectionfont{\rmfamily\mdseries\scshape\normalsize}
-\subsubsectionfont{\rmfamily\bfseries\upshape\normalsize}
-\setcounter{secnumdepth}{0}
 
-% PDF SETUP
-%--------------------------------
-\usepackage{hyperref}
-\hypersetup
-{
-  pdfauthor={Ραφαηλια Ασημακοπουλου},
-  pdfsubject={Ραφαηλια Ασημακοπουλου CV},
-  pdftitle={Ραφαηλια Ασημακοπουλου CV},
-  colorlinks, breaklinks, xetex, bookmarks,
-  filecolor=black,
-  urlcolor=[rgb]{0.117,0.682,0.858},
-  linkcolor=[rgb]{0.117,0.682,0.858},
-  linkcolor=[rgb]{0.117,0.682,0.858},
-  citecolor=[rgb]{0.117,0.682,0.858}
-}
+\sectionfont{%			            % Change font of \section command
+	\usefont{OT1}{cmr}{bx}{n}%		% bch-b-n: CharterBT-Bold font
+	\sectionrule{0pt}{0pt}{-3pt}{0pt}}
 
-%
-%bibliography
-\usepackage[backend=biber,style=numeric,firstinits=true,sorting=ynt,maxnames=5,minnames=3,hyperref=false,isbn=false,doi=false,url=false,safeinputenc=true,language=english]{biblatex}
-\usepackage{csquotes}
-\usepackage{hyperref}
-\DeclareNameAlias{default}{last-first}
+%%% Macros
+%%% ------------------------------------------------------------
+\newlength{\spacebox}
+\settowidth{\spacebox}{8888888888}			% Box to align text
+\newcommand{\sepspace}{\vspace*{1em}}		% Vertical space macro
+\newcommand{\MyName}[1]{ % Name
+		\LARGE \usefont{OT1}{cmr}{bx}{n} \hfill #1
+		\par \normalsize \normalfont}
+		
+\newcommand{\MySlogan}[1]{ % Slogan (optional)
+		\large \usefont{OT1}{cmr}{m}{n}\hfill \textit{#1}
+		\par \normalsize \normalfont}
 
-%J1, J2, etc
-\makeatletter
-\define@key{blx@bib2}{prefixnumbers}{%
-  \def\blx@prefixnumbers{#1}%
-  \iftoggle{blx@defernumbers}
-    {}
-    {\iftoggle{blx@labelnumber}
-       {\blx@warning{%
-          Option 'prefixnumbers' requires global\MessageBreak
-          'defernumbers=true'}}
-       {}}}
-\makeatother
+\newcommand{\NewPart}[1]{\section*{\large \uppercase{#1}}}
 
-% table of contents without dots
-\usepackage{tocloft}
-\renewcommand{\cftdot}{}
+\newcommand{\PersonalEntry}[2]{
+		\noindent\hangindent=2em\hangafter=0 % Indentation
+		\parbox{\spacebox}{        % Box to align text
+		\textit{#1}}		       % Entry name (birth, address, etc.)
+		\hspace{1.5em} #2 \par}    % Entry value
+\newcommand{\ObjectiveEntry}[1]{
+		 \noindent\hangindent=2em\hangafter=0\textit{#1} \par     % Objective
+		 }
+\newcommand{\EducationEntry}[6]{
+		\noindent \textbf{#1} \hfill      % Study
+		\colorbox{White}{%
+			\parbox{8em}{%
+			\hfill\color{Black}\textbf{#2}}} \par  % Duration
+		\noindent \textit{#3} \par        % School
+		\noindent\hangindent=2em\hangafter=0\textit{#4}\par % Description
+		\noindent\hangindent=2em\hangafter=0\textit{#5}\par % Description2
+		\noindent\hangindent=2em\hangafter=0\textit{#6} % Description3
+		\normalsize \par}
+\newcommand{\ResearchEntry}[5]{
+		\noindent \textbf{#1} \hfill      % Study
+		\colorbox{White}{%
+			\parbox{12em}{%
+			\hfill\color{Black}\textbf{#2}}} \par  % Duration
+		\noindent \textit{#3} \par        % Area
+		\noindent\hangindent=2em\hangafter=0\textit{#4}\par % Description
+		\noindent\hangindent=2em\hangafter=0\textit{#5} % Description
+		\normalsize \par}
 
-% bibliography sections
-\makeatletter
-\newcommand{\bibsection}[3]{
-\subsection{#1}
-\begin{refsection}[#2]
-  \nocite{*}
-  \begin{refcontext}[prefixnumbers=#3]
-    \printbibliography[heading=none]
-  \end{refcontext}
-\end{refsection}
-}
-\makeatother
+\newcommand{\WorkEntry}[5]{				  % Same as \EducationEntry
+		\noindent \textbf{#1} \hfill      % Jobname
+		\colorbox{White}{\color{Black}\textbf{#2}} \par  % Duration
+		\noindent \textit{#3} \par              % Company
+		\noindent\hangindent=2em\hangafter=0\textit{#4}\par % Description
+		\noindent\hangindent=2em\hangafter=0\textit{#5} % Description
+		\normalsize \par}
+\newcommand{\SkillsEntry}[2]{      % Same as \PersonalEntry
+		\noindent\hangindent=2em\hangafter=0 % Indentation
+		\parbox{8em}{        % Box to align text
+		\textit{#1}}			   % Entry name (birth, address, etc.)
+		\hspace{1.5em} #2 \par}    % Entry value	
+\newcommand{\ReferenceEntry}[1]{
+		 \noindent\hangindent=2em\hangafter=0\textit{#1} \\[0.5cm]     % Reference
+		 }
 
-% titlepages style
-\newlength{\drop}% for my convenience
 
-%titleS
-\makeatletter
-\newcommand*{\titleS}{\begingroup% Scripts, T&H p 151
-\drop = 0.1\textheight
-\centering
-\vspace*{\drop}
-{\Huge \@title}\\[\baselineskip]
-{\large\itshape \@author}\\[\baselineskip]
-\vfill
-\rule{0.4\textwidth}{0.4pt}\\[\baselineskip]
-{\large\itshape \@date}\par
-\vspace*{\drop}
-\endgroup}
-\makeatother
-
-%titleGM
-\makeatletter
-\newcommand*{\titleGM}{\begingroup% Gentle Madness
-\drop = 0.1\textheight
-  \hbox{%
-  \hspace*{0.1\textwidth}%
-  \rule{1pt}{\textheight}
-  \hspace*{0.05\textwidth}%
-  \parbox[b]{0.75\textwidth}{
-  \vbox{%
-    \vspace{\drop}
-    {\noindent\Huge\bfseries Ραφαηλια\\[0.5\baselineskip]
-               Ασημακοπουλου}\\[2\baselineskip]
-    {\Large\itshape Φοιτητρια\\[0.5\baselineskip]
-                    
-    \textsc{\LARGE \@title}
-    \vspace{0.5\textheight}
-    {\noindent \@date}\\[\baselineskip]}
-    }% end of vbox
-    }% end of parbox
-  }% end of hbox
-\endgroup}
-\makeatother
-
-\title{Βιογραφικό Σημείωμα}
-\author{Ραφαηλια Ασημακοπουλου, Φοιτητρια}
-
-% DOCUMENT
-%--------------------------------
+%%% Begin Document
+%%% ------------------------------------------------------------
 \begin{document}
 
-\pagestyle{empty}
-\titleGM
-\clearpage
+\begin{wrapfigure}{r}{0.1\textwidth}
+	
+		\includegraphics[width=0.1\textwidth]{new.jpg}
 
-\tableofcontents
-\clearpage
+\end{wrapfigure}
 
-\pagestyle{plain}
+\MyName{Rafailia Asimakopoulou}
+\MySlogan{Curriculum Vitae}
+\sepspace
 
+%%% Personal details
+%%% ------------------------------------------------------------
+\NewPart{Personal details}{}
 
+\PersonalEntry{Birth}{October 10, 1994}
+%\PersonalEntry{Address}{111 First St, New York}
+\PersonalEntry{Phone}{+30 694 038 8968}
+\PersonalEntry{E-mail}{\href{mailto:rafailiasim@gmail.com}{rafailiasim@gmail.com}}
+\sepspace
 
-{\LARGE Ραφαηλια Ασημακοπουλου}\\[.2cm]
-\textit{Φοιτητρια}\\[.2cm]
+%%% Objective
+%%% ------------------------------------------------------------
+\NewPart{Objective}{}
 
-\begin{multicols}{2}
+\ObjectiveEntry{I am looking to study in Human Computer Interaction - HCI masters programme in Patras, where I can not only implement my research methods and what I have learnt as a student in Electrical and Computer Engineering Department in Patras and as an intern in Bioengineering: app development position, but also acquire a new perspective and expand my skills.}
+\sepspace
 
-{\scriptsize
-Πανεπιστήμιο Πατρας\\
-Ελλάδα\\
-}
+%%% Education
+%%% ------------------------------------------------------------
+\NewPart{Education}{}
 
-\columnbreak
+\EducationEntry{MSc. Electrical and Computer Engineering}{2012-2019}{University of Patras}
+{Thesis: Dynamic Modeling of Psychopathology Disorders}
+{Supervisor: Prof. N. T. Koussoulas}
+{Description: This study is focused in the field of bioinformatics and deals with the modeling of bipolar disorder using statistical models. Firstly, I designed a progressive web application (pwa) including mood mapping questionnaires to collect data from clinical patients. Then, I performed a statistical analysis of the collected data and used arima models for the prediction of future values. Lastly, I tested the accuracy of nonlinear models proposed by Michael B. Bonsall in his related study for the prediction of the mood data in the presence of noise.}
+\sepspace
 
-{\scriptsize
-\faStyle{regular}
-\faHome \hspace{0.1cm} \href{http://github.com/moya10}{github.com/moya10}\\
-\faEnvelope \hspace{0.1cm} \href{mailto:simple@example.com}{simple@example.com}\\
+%%% Research
+%%% ------------------------------------------------------------
+\NewPart{Research experience}{}
 
-\vfill
+\ResearchEntry{Data Analysis}{10.2018-current}{University of Patras, General University Hospital of Patras}
+{Supervisors: Prof. S. Daskalaki, Prof. M. Skokou, Prof. O. Andreopoulou}
+{Description: The aim of this study is to examine the reliability and validity of the ASRM scale in a greek clinical sample of patients suffering from bipolar disorder. Our work soon will be published.}
+\sepspace
 
-\faPhone +30 694 038 8968\\
-}
+%%% Work experience
+%%% ------------------------------------------------------------
+\NewPart{Work experience}{}
 
-\end{multicols}
+\WorkEntry{Bioengineering}{05.2018-08.2018}{SystServ SA, Internship}
+{Supervisor: Hara Pylarinou}{Description: Computer Programming for android and iOS applications. More in particular, in 2018 I was a summer intern in Bioengineering position working on the TreatMeOut project -a mobile application that take HRV measurements using photoplethysmography and smart algorithms- for the company called SystServ in Patras, in Greece and I actually achieved to accomplish their requirements developing services for both Android and iOS devices using Android Studio and Xcode environments.}
+\sepspace
 
-\vspace{30pt}
+%%% Skills
+%%% ------------------------------------------------------------
+\NewPart{Skills}{}
 
+\SkillsEntry{Languages}{Greek (mother tongue)}
+\SkillsEntry{}{English (upper intermediate)}
+\SkillsEntry{}{German (upper intermediate)}
 
-\section{Ερευνητικά ενδιαφέροντα}
-          \quad Τεχνολογίες λογισμικού
-          \quad Προγραμματισμός πολυμέσων
-    
-% \vfill
+\SkillsEntry{Computer Skills}{Matlab, \LaTeX, SPSS, Android Studio, python,}
+\SkillsEntry{\textit{\small{(Intermediate)}}}{Xcode, web-development}
 
-\vspace{25pt}
+%%% References
+%%% ------------------------------------------------------------
+\NewPart{References}{}
 
-\section{Εργασία}
-\noindent
-\note{2012---}\textsc{Πανεπιστήμιο Πατρας}\\
-\emph{Φοιτητρια (2012--)}\\
-Πατρα, Ελλάδα\\[.2cm]
-\note{2012---}\textsc{Πανεπιστήμιο Πατρας}\\
-\emph{Φοιτητρια (2012--)}\\
-Πατρα, Ελλάδα\\[.2cm]
-
-\section{Εκπαίδευση}
-\noindent
-\note{2012}\textsc{Msc Electrical and Computer Engineering}\\
-\emph{, }\\
-\emph{Electrical and Computer Engineering, University of Patras}.\\[.2cm]
-
-\section{Γλώσσες}
-\emph{Ελληνικά} (Μητρική)\\
-\emph{Αγγλικά} (Μετρια)\\
-
-%\vspace{1cm}
-\vfill{}
-%\hrulefill
-
-\begin{center}
-{\scriptsize  Τελευταία ενημέρωση: \today\- •\-
-% ---- PLEASE LEAVE THIS BACKLINK FOR ATTRIBUTION AS PER CC-LICENSE
-Η σελιδοποίση έγινε με το \href{https://github.com/mrzool/cv-boilerplate}{
-\fontspec{Times New Roman}\XeTeX }\\
-% ---- FILL IN THE FULL URL TO YOUR CV HERE
-\href{http://github.com/moya10}{github.com/moya10}}
-\end{center}
-
+\ReferenceEntry{*Available upon request}
+\begin{tabular}{@{}V{0.5\columnwidth}V{0.5\columnwidth}l l}
+\href{http://www.sml.ee.upatras.gr/Personnel/Faculty/Koussoulas.aspx}{Nick T. Koussoulas } & \href{http://www.ece.upatras.gr/en/personnel/faculty.html?id=900}{Sofia Daskalaki} \\
+ Department of Electrical and Computer Engineering &  Department of Electrical and Computer Engineering  \\
+ University of Patras &  University of Patras \\
+\small{\href{mailto:ntk@ece.upatras.gr}{ntk@ece.upatras.gr}, +30 2610 99 64 51} & \small{\href{mailto:sdask@upatras.gr}{sdask@upatras.gr},+30 2610 99 78 10} \\
+%&& \\
+\end{tabular}
+\bookmark[page=1,level=0]{Rafailia Asimakopoulou}
+\bookmark[page=1,level=1]{Personal details}
+\bookmark[page=1,level=1]{Objective}
+\bookmark[page=1,level=1]{Education}
+\bookmark[page=1,level=1]{Research experience}
+\bookmark[page=2,level=1]{Work experience}
+\bookmark[page=2,level=1]{Skills}
+\bookmark[page=2,level=1]{References}
 \end{document}
