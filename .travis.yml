@@ -6,7 +6,7 @@ before_install:
 - rm pandoc-1.15.2-1-amd64.deb
 branches:
   only:
-  - gh-pages
+  - release
 script:
   - JEKYLL_ENV=production bundle exec jekyll build --destination site
   - make
@@ -20,4 +20,4 @@ deploy:
   github-token: 74de46543a123886e796d5712c1df4980abc0d51 
   keep-history: true
   on:
-    branch: gh-pages
+    branch: release
