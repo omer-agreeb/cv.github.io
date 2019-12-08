@@ -96,7 +96,7 @@ To set up Travis CI, put the following in the .travis.yml file in your repositor
 
 `  only:`
 
-`  - gh-pages`
+`  - release`
 
 `script:`
 
@@ -126,10 +126,12 @@ To set up Travis CI, put the following in the .travis.yml file in your repositor
 
 `  on:`
 
-`    branch: gh-pages`
+`    branch: release`
 
 Usage of other commands, such as latex or xelatex, is analogous.
 
 See Trvais CI build output 
 
 ![Image](https://bipolartest.000webhostapp.com/image.png)
+
+With *pull-request* I add the changes from *release branch-tree* to *gh-pages branch-tree*
