@@ -69,3 +69,16 @@ In *_config.yml* add the cv option and a link to download the *resume.pdf* file.
 ## Upload
 
 Upload the whole .git project in your repository and create the *gh-pages* branch.
+
+## Continuous Integration
+
+To set up Travis CI, put the following in the .travis.yml file in your repository:
+
+`sudo: required`
+`dist: trusty`
+`before_install:`
+`- sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-full`
+`script:`
+`- pdflatex -interaction=nonstopmode -halt-on-error *.tex`
+
+Usage of other commands, such as latex or xelatex, is analogous.
