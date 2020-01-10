@@ -60,7 +60,6 @@ To set up Travis CI, create .travis.yml file in your repository:
 
 See Trvais CI build output 
 
-![Image](https://bipolartest.000webhostapp.com/image.png)
 link to [build](https://travis-ci.com/moya10/awesome-cv)
 
 
