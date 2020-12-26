@@ -3,29 +3,29 @@ repository: Git repository where your resume will be hosted, only required if yo
 # favicon: Directory of your favicon (eg. images/favicon.ico)(optional)
 
 # Personal info
-name: Your Name
-title: Your job title
-email: Your email (optional)
-phone: Your phone number (optional)
-cv   : "resume.pdf"
-#website: Your website (eg. https://google.com)(optional)
+name: Omer Alghreeb
+title: Developer with Ruby On Rails
+email: omer.algreeb2019@gmail.com
+phone: 772535299 || 700010547
+# cv   : "resume.pdf"
+website: https://alghreeb.me/
 
 # Social links
-#twitter_username: jekyllrb
-github_username:  moya10
-#dribbble_username: jekyll
-#facebook_username: jekyll
-#flickr_username: jekyll
-#instagram_username: jekyll
-#linkedin_username: jekyll
-#xing_username: jekyll
-#pinterest_username: jekyll
+twitter_username: Omer_Algreeb
+github_username:  omer-agreeb
+dribbble_username: jekyll
+facebook_username: omer.algreeb
+flickr_username: jekyll
+instagram_username: omeralgreeb
+linkedin_username: omer-algreeb-076940195
+xing_username: jekyll
+pinterest_username: jekyll
 #youtube_username: jekyll
-#googleplus_username: +jekyll
+googleplus_username: +jekyll
 
 # About Section
 # about_title: About Me (Use this to override about section title)
-about_profile_image: images/profile.jpg
+about_profile_image: images/omer.png
 about_content: | # this will include new lines to allow paragraphs
   Write an awesome description about yourself here, this supports markdown, so you can add links and highlight things <mark>like this</mark>.
 
